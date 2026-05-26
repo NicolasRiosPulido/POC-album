@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import React, { useRef } from "react";
+import React from "react";
 import {
   MousePointer2,
   Type,
-  Image as ImageIcon,
   Hand,
   Undo2,
   Redo2,
@@ -15,7 +14,7 @@ import {
   Layers,
 } from "lucide-react";
 import { useEditorStore, selectCanUndo, selectCanRedo } from "@/store/editorStore";
-import type { Tool, ImageElement, UploadedAsset } from "@/types";
+import type { Tool } from "@/types";
 
 const TOOLS: { id: Tool; icon: React.ElementType; label: string; shortcut: string }[] = [
   { id: "select", icon: MousePointer2, label: "Select", shortcut: "V" },
@@ -33,63 +32,12 @@ export default function Toolbar() {
     zoomIn,
     zoomOut,
     resetZoom,
-    book,
     isSaving,
     lastSaved,
-    addAsset,
-    addElement,
-    currentPageId,
   } = useEditorStore();
 
   const canUndo = useEditorStore(selectCanUndo);
   const canRedo = useEditorStore(selectCanRedo);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        const src = ev.target?.result as string;
-        const img = new window.Image();
-        img.onload = () => {
-          const asset: UploadedAsset = {
-            id: crypto.randomUUID(),
-            name: file.name,
-            src,
-            width: img.naturalWidth,
-            height: img.naturalHeight,
-            size: file.size,
-            type: file.type,
-          };
-          addAsset(asset);
-          // Place first image on canvas
-          const page = book.pages.find((p) => p.id === currentPageId);
-          if (!page) return;
-          const maxDim = 300;
-          const scale = Math.min(maxDim / img.naturalWidth, maxDim / img.naturalHeight, 1);
-          const element: ImageElement = {
-            id: crypto.randomUUID(),
-            type: "image",
-            src,
-            name: file.name,
-            x: 50,
-            y: 50,
-            width: img.naturalWidth * scale,
-            height: img.naturalHeight * scale,
-            rotation: 0,
-            zIndex: page.elements.length,
-            opacity: 1,
-          };
-          addElement(currentPageId, element);
-        };
-        img.src = src;
-      };
-      reader.readAsDataURL(file);
-    });
-    e.target.value = "";
-  };
 
   return (
     <header className="flex items-center gap-2 px-4 h-14 bg-[#f7f5f1] border-b border-[#d7d1c7] z-50 shrink-0 text-slate-700">
@@ -172,25 +120,6 @@ export default function Toolbar() {
           <ZoomIn className="w-4 h-4" />
         </button>
       </div>
-
-      <div className="w-px h-6 bg-[#d8d1c6] mx-1" />
-
-      {/* Upload */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        multiple
-        className="hidden"
-        onChange={handleImageUpload}
-      />
-      <button
-        onClick={() => fileInputRef.current?.click()}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ebe6dd] hover:bg-white text-slate-700 text-xs font-medium transition-colors border border-[#ddd5c9]"
-      >
-        <ImageIcon className="w-3.5 h-3.5" />
-        <span className="hidden sm:block">Upload</span>
-      </button>
 
       {/* Save indicator */}
       <div className="ml-2 text-slate-400 text-xs hidden md:block">
