@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Toolbar from "./Toolbar";
 import Sidebar from "./Sidebar";
 import PageNavigator from "./PageNavigator";
@@ -23,11 +23,15 @@ export default function BookEditor() {
   useKeyboardShortcuts();
   useAutoSave();
 
-  const { currentPageId, zoom } = useEditorStore();
+  const { currentPageId, normalizePagesToFourThree } = useEditorStore();
   const canvasContainerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    normalizePagesToFourThree();
+  }, [normalizePagesToFourThree]);
+
   return (
-    <div className="flex flex-col h-screen bg-[#0a0f1e] overflow-hidden">
+    <div className="flex flex-col h-screen bg-[#ece9e3] overflow-hidden text-slate-800">
       <Toolbar />
 
       <div className="flex flex-1 overflow-hidden">
@@ -37,10 +41,10 @@ export default function BookEditor() {
         {/* Main canvas area */}
         <main
           ref={canvasContainerRef}
-          className="flex-1 overflow-auto bg-[#0D1525] relative"
+          className="flex-1 overflow-auto bg-[#efede8] relative"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)",
+              "radial-gradient(circle at 1px 1px, rgba(148,163,184,0.18) 1px, transparent 0)",
             backgroundSize: "24px 24px",
           }}
         >

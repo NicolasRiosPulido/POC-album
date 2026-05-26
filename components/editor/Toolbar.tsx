@@ -8,11 +8,8 @@ import {
   Hand,
   Undo2,
   Redo2,
-  Download,
-  Save,
   ZoomIn,
   ZoomOut,
-  ChevronDown,
   Layers,
 } from "lucide-react";
 import { useEditorStore, selectCanUndo, selectCanRedo } from "@/store/editorStore";
@@ -34,14 +31,12 @@ export default function Toolbar() {
     zoomIn,
     zoomOut,
     resetZoom,
-    setZoom,
     book,
     isSaving,
     lastSaved,
     addAsset,
     addElement,
     currentPageId,
-    assets,
   } = useEditorStore();
 
   const canUndo = useEditorStore(selectCanUndo);
@@ -95,13 +90,13 @@ export default function Toolbar() {
   };
 
   return (
-    <header className="flex items-center gap-2 px-4 h-14 bg-[#0F172A] border-b border-white/10 z-50 shrink-0">
+    <header className="flex items-center gap-2 px-4 h-14 bg-[#f7f5f1] border-b border-[#d7d1c7] z-50 shrink-0 text-slate-700">
       {/* Logo */}
       <div className="flex items-center gap-2 mr-4">
         <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#FF6B6B] to-[#14B8A6] flex items-center justify-center">
           <Layers className="w-4 h-4 text-white" />
         </div>
-        <span className="text-white font-semibold text-sm tracking-tight hidden sm:block">
+        <span className="text-slate-800 font-semibold text-sm tracking-tight hidden sm:block">
           Studio Álbum
         </span>
       </div>
@@ -112,7 +107,7 @@ export default function Toolbar() {
       <div className="flex-1" />
 
       {/* Tools */}
-      <div className="flex items-center gap-1 bg-white/5 rounded-lg p-1">
+      <div className="flex items-center gap-1 bg-[#ebe6dd] rounded-lg p-1 border border-[#ddd5c9]">
         {TOOLS.map(({ id, icon: Icon, label, shortcut }) => (
           <button
             key={id}
@@ -120,8 +115,8 @@ export default function Toolbar() {
             title={`${label} (${shortcut})`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
               tool === id
-                ? "bg-white text-[#0F172A]"
-                : "text-white/70 hover:text-white hover:bg-white/10"
+                ? "bg-white text-slate-800 shadow-sm"
+                : "text-slate-500 hover:text-slate-800 hover:bg-white/80"
             }`}
           >
             <Icon className="w-3.5 h-3.5" />
@@ -130,14 +125,14 @@ export default function Toolbar() {
         ))}
       </div>
 
-      <div className="w-px h-6 bg-white/10 mx-1" />
+      <div className="w-px h-6 bg-[#d8d1c6] mx-1" />
 
       {/* Undo/Redo */}
       <button
         onClick={undo}
         disabled={!canUndo}
         title="Undo (Ctrl+Z)"
-        className="p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
         <Undo2 className="w-4 h-4" />
       </button>
@@ -145,38 +140,38 @@ export default function Toolbar() {
         onClick={redo}
         disabled={!canRedo}
         title="Redo (Ctrl+Y)"
-        className="p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
         <Redo2 className="w-4 h-4" />
       </button>
 
-      <div className="w-px h-6 bg-white/10 mx-1" />
+      <div className="w-px h-6 bg-[#d8d1c6] mx-1" />
 
       {/* Zoom */}
       <div className="flex items-center gap-1">
         <button
           onClick={zoomOut}
           title="Zoom Out (Ctrl+-)"
-          className="p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+          className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 transition-colors"
         >
           <ZoomOut className="w-4 h-4" />
         </button>
         <button
           onClick={resetZoom}
-          className="px-2 py-1 rounded-md text-xs font-mono text-white/80 hover:text-white hover:bg-white/10 transition-colors min-w-[52px] text-center"
+          className="px-2 py-1 rounded-md text-xs font-mono text-slate-700 hover:text-slate-900 hover:bg-white/80 transition-colors min-w-[52px] text-center"
         >
           {Math.round(zoom * 100)}%
         </button>
         <button
           onClick={zoomIn}
           title="Zoom In (Ctrl++)"
-          className="p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+          className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 transition-colors"
         >
           <ZoomIn className="w-4 h-4" />
         </button>
       </div>
 
-      <div className="w-px h-6 bg-white/10 mx-1" />
+      <div className="w-px h-6 bg-[#d8d1c6] mx-1" />
 
       {/* Upload */}
       <input
@@ -189,14 +184,14 @@ export default function Toolbar() {
       />
       <button
         onClick={() => fileInputRef.current?.click()}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ebe6dd] hover:bg-white text-slate-700 text-xs font-medium transition-colors border border-[#ddd5c9]"
       >
         <ImageIcon className="w-3.5 h-3.5" />
         <span className="hidden sm:block">Upload</span>
       </button>
 
       {/* Save indicator */}
-      <div className="ml-2 text-white/40 text-xs hidden md:block">
+      <div className="ml-2 text-slate-400 text-xs hidden md:block">
         {isSaving ? (
           <span className="animate-pulse">Saving…</span>
         ) : lastSaved ? (
@@ -229,12 +224,12 @@ function TitleInput() {
           setEditing(false);
         }
       }}
-      className="bg-white/10 text-white text-sm font-medium px-2 py-1 rounded-md outline-none border border-white/20 focus:border-[#FF6B6B]/60 max-w-[200px]"
+      className="bg-white text-slate-800 text-sm font-medium px-2 py-1 rounded-md outline-none border border-[#d7d1c7] focus:border-[#FF6B6B]/60 max-w-[200px]"
     />
   ) : (
     <button
       onClick={() => { setEditing(true); setValue(book.title); }}
-      className="text-white/80 text-sm font-medium hover:text-white transition-colors px-1 max-w-[200px] truncate"
+      className="text-slate-700 text-sm font-medium hover:text-slate-900 transition-colors px-1 max-w-[200px] truncate"
     >
       {book.title}
     </button>

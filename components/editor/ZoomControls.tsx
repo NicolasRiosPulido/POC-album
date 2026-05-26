@@ -10,10 +10,10 @@ export default function ZoomControls() {
   const { zoom, setZoom, zoomIn, zoomOut, resetZoom } = useEditorStore();
 
   return (
-    <div className="absolute bottom-6 right-6 flex items-center gap-1 bg-[#0F172A]/90 backdrop-blur-sm border border-white/10 rounded-xl px-2 py-1.5 shadow-xl z-20">
+    <div className="absolute bottom-6 right-6 flex items-center gap-1 bg-[#f7f5f1]/95 backdrop-blur-sm border border-[#d7d1c7] rounded-xl px-2 py-1.5 shadow-lg z-20 text-slate-700">
       <button
         onClick={zoomOut}
-        className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white transition-colors"
         title="Zoom out"
       >
         <ZoomOut className="w-4 h-4" />
@@ -22,7 +22,7 @@ export default function ZoomControls() {
       <select
         value={zoom}
         onChange={(e) => setZoom(Number(e.target.value))}
-        className="bg-transparent text-white/80 text-xs font-mono focus:outline-none cursor-pointer px-1 [&>option]:bg-[#0F172A]"
+        className="bg-transparent text-slate-700 text-xs font-mono focus:outline-none cursor-pointer px-1 [&>option]:bg-white"
       >
         {ZOOM_PRESETS.map((z) => (
           <option key={z} value={z}>
@@ -33,17 +33,17 @@ export default function ZoomControls() {
 
       <button
         onClick={zoomIn}
-        className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white transition-colors"
         title="Zoom in"
       >
         <ZoomIn className="w-4 h-4" />
       </button>
 
-      <div className="w-px h-4 bg-white/10 mx-0.5" />
+      <div className="w-px h-4 bg-[#d8d1c6] mx-0.5" />
 
       <button
         onClick={resetZoom}
-        className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white transition-colors"
         title="Fit to screen"
       >
         <Maximize className="w-4 h-4" />

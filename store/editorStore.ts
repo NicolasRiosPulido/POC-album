@@ -10,8 +10,10 @@ import type {
   UploadedAsset,
 } from "@/types";
 
-const DEFAULT_PAGE_WIDTH = 794; // A4 at 96dpi
-const DEFAULT_PAGE_HEIGHT = 1123;
+const DEFAULT_PAGE_WIDTH = 1200; // 4:3 format
+const DEFAULT_PAGE_HEIGHT = 900;
+const PAGE_ASPECT_RATIO = 4 / 3;
+const DEFAULT_ZOOM = 0.75;
 
 function createDefaultPage(index: number): Page {
   return {
@@ -89,6 +91,9 @@ interface EditorActions {
 
   // Reset
   resetEditor: () => void;
+
+  // Page format
+  normalizePagesToFourThree: () => void;
 }
 
 type EditorStore = EditorState & EditorActions;
@@ -100,7 +105,7 @@ export const useEditorStore = create<EditorStore>()(
     book: initialBook,
     currentPageId: initialBook.pages[0].id,
     selectedElementId: null,
-    zoom: 1,
+    zoom: DEFAULT_ZOOM,
     tool: "select",
     assets: [],
     history: [{ pages: initialBook.pages, timestamp: Date.now() }],
@@ -371,7 +376,7 @@ export const useEditorStore = create<EditorStore>()(
     },
 
     resetZoom: () => {
-      set({ zoom: 1 });
+      set({ zoom: DEFAULT_ZOOM });
     },
 
     setTitle: (title) => {
@@ -402,13 +407,41 @@ export const useEditorStore = create<EditorStore>()(
       set({ lastSaved: date });
     },
 
+    normalizePagesToFourThree: () => {
+      set((state) => {
+        const hasNonFourThreePages = state.book.pages.some(
+          (page) => Math.abs(page.width / page.height - PAGE_ASPECT_RATIO) > 0.001
+        );
+
+        if (!hasNonFourThreePages) {
+          return state;
+        }
+
+        const pages = state.book.pages.map((page) => {
+          const nextWidth = Math.round(page.height * PAGE_ASPECT_RATIO);
+          return {
+            ...page,
+            width: nextWidth,
+          };
+        });
+
+        return {
+          book: {
+            ...state.book,
+            pages,
+            updatedAt: new Date().toISOString(),
+          },
+        };
+      });
+    },
+
     resetEditor: () => {
       const book = createDefaultBook();
       set({
         book,
         currentPageId: book.pages[0].id,
         selectedElementId: null,
-        zoom: 1,
+        zoom: DEFAULT_ZOOM,
         tool: "select",
         assets: [],
         history: [{ pages: book.pages, timestamp: Date.now() }],
