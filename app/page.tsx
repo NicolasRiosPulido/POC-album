@@ -23,22 +23,22 @@ export default function Home() {
           <span className="font-bold text-lg tracking-tight">Studio Álbum</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#0F172A]/60">
-          <a href="#features" className="hover:text-[#0F172A] transition-colors">Features</a>
-          <a href="#pricing" className="hover:text-[#0F172A] transition-colors">Pricing</a>
-          <a href="#preview" className="hover:text-[#0F172A] transition-colors">Preview</a>
+          <a href="#features" className="hover:text-[#0F172A] transition-colors">Funciones</a>
+          <a href="#pricing" className="hover:text-[#0F172A] transition-colors">Precios</a>
+          <a href="#preview" className="hover:text-[#0F172A] transition-colors">Vista previa</a>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/editor"
             className="hidden sm:block text-sm font-medium text-[#0F172A]/60 hover:text-[#0F172A] transition-colors"
           >
-            Sign in
+            Iniciar sesion
           </Link>
           <Link
             href="/editor"
             className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0F172A] text-white text-sm font-medium hover:bg-[#1e293b] transition-colors shadow-md"
           >
-            Start for free
+            Empezar gratis
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -52,19 +52,19 @@ export default function Home() {
         <div className="max-w-5xl mx-auto text-center relative">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FF6B6B]/10 border border-[#FF6B6B]/20 text-[#FF6B6B] text-xs font-semibold tracking-wide mb-8">
             <Sparkles className="w-3.5 h-3.5" />
-            Introducing Studio Álbum 1.0
+            Presentamos Studio Álbum 1.0
           </div>
 
           <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6">
-            Design photo books{" "}
+            Disena albumes de fotos{" "}
             <span className="bg-gradient-to-r from-[#FF6B6B] to-[#14B8A6] bg-clip-text text-transparent">
-              you&apos;ll love forever.
+              que amaras para siempre.
             </span>
           </h1>
 
           <p className="text-lg md:text-xl text-[#0F172A]/50 max-w-2xl mx-auto leading-relaxed mb-10">
-            A powerful canvas-based editor that makes it effortless to create,
-            design, and export beautiful photo books — from concept to print.
+            Un editor potente basado en lienzo que te permite crear,
+            disenar y exportar albumes hermosos sin esfuerzo, de la idea a la impresion.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -72,14 +72,14 @@ export default function Home() {
               href="/editor"
               className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#0F172A] text-white font-semibold text-base hover:bg-[#1e293b] transition-all shadow-xl shadow-[#0F172A]/20"
             >
-              Open Editor
+              Abrir editor
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href="#preview"
               className="flex items-center gap-2 px-8 py-4 rounded-2xl border-2 border-[#0F172A]/10 text-[#0F172A]/70 font-semibold text-base hover:border-[#0F172A]/20 hover:text-[#0F172A] transition-all"
             >
-              See preview
+              Ver vista previa
             </a>
           </div>
 
@@ -89,9 +89,9 @@ export default function Home() {
                 <Star key={i} className="w-3.5 h-3.5 fill-[#FF6B6B] text-[#FF6B6B]" />
               ))}
             </div>
-            <span>Loved by 2,400+ creators</span>
+            <span>Elegido por mas de 2,400 creadores</span>
             <span className="hidden sm:block">•</span>
-            <span className="hidden sm:block">No credit card required</span>
+            <span className="hidden sm:block">No requiere tarjeta de credito</span>
           </div>
         </div>
 
@@ -110,7 +110,7 @@ export default function Home() {
             </div>
             <div className="bg-[#0D1525] flex" style={{ minHeight: 400 }}>
               <div className="w-48 bg-[#0F172A] border-r border-white/10 p-3 space-y-2">
-                {["Upload Image", "Add Text"].map((label) => (
+                {["Subir imagen", "Agregar texto"].map((label) => (
                   <div key={label} className="h-8 rounded-lg bg-white/5 flex items-center px-3 gap-2">
                     <div className="w-3 h-3 rounded-sm bg-[#FF6B6B]/50" />
                     <span className="text-white/40 text-xs">{label}</span>
@@ -156,10 +156,10 @@ export default function Home() {
       <section id="features" className="py-24 px-6 md:px-12 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[#FF6B6B] font-semibold text-sm tracking-wide mb-3">EVERYTHING YOU NEED</p>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Designed for creators.</h2>
+            <p className="text-[#FF6B6B] font-semibold text-sm tracking-wide mb-3">TODO LO QUE NECESITAS</p>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Disenado para creadores.</h2>
             <p className="text-[#0F172A]/50 text-lg max-w-xl mx-auto">
-              Powerful tools wrapped in a clean, intuitive interface that gets out of your way.
+              Herramientas potentes dentro de una interfaz limpia e intuitiva que no estorba tu flujo.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -180,20 +180,20 @@ export default function Home() {
       <section id="pricing" className="py-24 px-6 md:px-12 bg-[#FAFAF9]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[#14B8A6] font-semibold text-sm tracking-wide mb-3">SIMPLE PRICING</p>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Start free. Scale when ready.</h2>
+            <p className="text-[#14B8A6] font-semibold text-sm tracking-wide mb-3">PRECIOS SIMPLES</p>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Empieza gratis. Escala cuando quieras.</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             {PLANS.map(({ name, price, description, features, highlight, cta }) => (
               <div key={name} className={`relative p-8 rounded-2xl border-2 flex flex-col ${highlight ? "border-[#FF6B6B] bg-[#0F172A] text-white shadow-2xl shadow-[#FF6B6B]/10 md:-mt-6" : "border-black/10 bg-white"}`}>
                 {highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#FF6B6B] text-white text-xs font-bold">MOST POPULAR</div>
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#FF6B6B] text-white text-xs font-bold">MAS POPULAR</div>
                 )}
                 <div className="mb-6">
                   <p className={`text-sm font-semibold mb-1 ${highlight ? "text-[#FF6B6B]" : "text-[#0F172A]/50"}`}>{name}</p>
                   <div className="flex items-baseline gap-1 mb-2">
                     <span className="text-4xl font-extrabold">{price}</span>
-                    {price !== "Free" && <span className={`text-sm ${highlight ? "text-white/50" : "text-[#0F172A]/40"}`}>/mo</span>}
+                    {price !== "Gratis" && <span className={`text-sm ${highlight ? "text-white/50" : "text-[#0F172A]/40"}`}>/mes</span>}
                   </div>
                   <p className={`text-sm ${highlight ? "text-white/60" : "text-[#0F172A]/50"}`}>{description}</p>
                 </div>
@@ -221,15 +221,15 @@ export default function Home() {
           <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-[#14B8A6]/10 rounded-full blur-3xl" />
         </div>
         <div className="max-w-3xl mx-auto text-center relative">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6">Your memories deserve the best.</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6">Tus recuerdos merecen lo mejor.</h2>
           <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
-            Join thousands of creators who use Studio Álbum to turn their photos into timeless keepsakes.
+            Unete a miles de creadores que usan Studio Álbum para convertir sus fotos en recuerdos eternos.
           </p>
           <Link
             href="/editor"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] text-white font-bold text-base hover:opacity-90 transition-opacity shadow-xl shadow-[#FF6B6B]/30"
           >
-            Create your first book — it&apos;s free
+            Crea tu primer album, es gratis
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -244,11 +244,11 @@ export default function Home() {
             </div>
             <span className="text-white/60 text-sm font-medium">Studio Álbum</span>
           </div>
-          <p className="text-white/30 text-xs">© {new Date().getFullYear()} Studio Álbum. All rights reserved.</p>
+          <p className="text-white/30 text-xs">© {new Date().getFullYear()} Studio Álbum. Todos los derechos reservados.</p>
           <div className="flex gap-6 text-white/40 text-xs">
-            <a href="#" className="hover:text-white/70 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white/70 transition-colors">Terms</a>
-            <a href="#" className="hover:text-white/70 transition-colors">Contact</a>
+            <a href="#" className="hover:text-white/70 transition-colors">Privacidad</a>
+            <a href="#" className="hover:text-white/70 transition-colors">Terminos</a>
+            <a href="#" className="hover:text-white/70 transition-colors">Contacto</a>
           </div>
         </div>
       </footer>
@@ -257,17 +257,17 @@ export default function Home() {
 }
 
 const FEATURES = [
-  { icon: Layout, title: "Canvas Editor", description: "A powerful drag-and-drop canvas editor with real-time rendering — just like Canva, built for photo books.", color: "#FF6B6B" },
-  { icon: Move, title: "Drag, Resize & Rotate", description: "Full element control: move, scale, rotate and layer images and text with pixel precision.", color: "#14B8A6" },
-  { icon: Type, title: "Rich Text Editing", description: "Add stylized text with custom fonts, colors, sizes, and alignment to every page.", color: "#8B5CF6" },
-  { icon: Layers, title: "Multi-page Layout", description: "Build books with unlimited pages, navigate with a visual page strip, and reorder pages with ease.", color: "#F59E0B" },
-  { icon: Zap, title: "Undo / Redo + Auto-save", description: "Never lose work. Full undo/redo history and local auto-save keep your progress safe.", color: "#3B82F6" },
+  { icon: Layout, title: "Editor de lienzo", description: "Un editor de arrastrar y soltar con renderizado en tiempo real, creado para albumes de fotos.", color: "#FF6B6B" },
+  { icon: Move, title: "Mover, redimensionar y rotar", description: "Control total de elementos: mueve, escala, rota y superpone imagenes y texto con precision de pixeles.", color: "#14B8A6" },
+  { icon: Type, title: "Edicion de texto enriquecido", description: "Agrega texto con estilo y personaliza fuentes, colores, tamanos y alineacion en cada pagina.", color: "#8B5CF6" },
+  { icon: Layers, title: "Diseno multipagina", description: "Crea albumes con paginas ilimitadas, navega con una tira visual y reordena paginas facilmente.", color: "#F59E0B" },
+  { icon: Zap, title: "Deshacer / rehacer + autoguardado", description: "No pierdas tu trabajo. El historial completo y el autoguardado local mantienen tu progreso seguro.", color: "#3B82F6" },
 ];
 
 const PLANS = [
-  { name: "Free", price: "Free", description: "For hobbyists getting started", highlight: false, cta: "Get started", features: ["Up to 3 books", "20 pages per book", "Basic image tools", "PDF export", "Local auto-save"] },
-    { name: "Free", price: "Free", description: "For hobbyists getting started", highlight: false, cta: "Get started", features: ["Up to 3 books", "20 pages per book", "Basic image tools", "Local auto-save"] },
-  { name: "Pro", price: "$9", description: "For serious creators", highlight: true, cta: "Start Pro free trial", features: ["Unlimited books", "Unlimited pages", "Advanced image editing", "High-res PDF export", "Custom fonts", "Cloud sync", "Priority support"] },
-    { name: "Pro", price: "$9", description: "For serious creators", highlight: true, cta: "Start Pro free trial", features: ["Unlimited books", "Unlimited pages", "Advanced image editing", "Custom fonts", "Cloud sync", "Priority support"] },
-  { name: "Studio", price: "$29", description: "For studios & teams", highlight: false, cta: "Contact sales", features: ["Everything in Pro", "Team collaboration", "Brand kit", "API access", "Dedicated support", "Custom integrations"] },
+  { name: "Gratis", price: "Gratis", description: "Para aficionados que estan empezando", highlight: false, cta: "Comenzar", features: ["Hasta 3 albumes", "20 paginas por album", "Herramientas basicas de imagen", "Exportacion PDF", "Autoguardado local"] },
+    { name: "Gratis", price: "Gratis", description: "Para aficionados que estan empezando", highlight: false, cta: "Comenzar", features: ["Hasta 3 albumes", "20 paginas por album", "Herramientas basicas de imagen", "Autoguardado local"] },
+  { name: "Pro", price: "$9", description: "Para creadores profesionales", highlight: true, cta: "Probar Pro gratis", features: ["Albumes ilimitados", "Paginas ilimitadas", "Edicion avanzada de imagen", "Exportacion PDF en alta resolucion", "Fuentes personalizadas", "Sincronizacion en la nube", "Soporte prioritario"] },
+    { name: "Pro", price: "$9", description: "Para creadores profesionales", highlight: true, cta: "Probar Pro gratis", features: ["Albumes ilimitados", "Paginas ilimitadas", "Edicion avanzada de imagen", "Fuentes personalizadas", "Sincronizacion en la nube", "Soporte prioritario"] },
+  { name: "Studio", price: "$29", description: "Para estudios y equipos", highlight: false, cta: "Contactar ventas", features: ["Todo lo de Pro", "Colaboracion en equipo", "Kit de marca", "Acceso API", "Soporte dedicado", "Integraciones personalizadas"] },
 ];

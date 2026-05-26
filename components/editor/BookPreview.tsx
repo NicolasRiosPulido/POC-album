@@ -23,8 +23,8 @@ function computeSpreads(pages: Page[]): Spread[] {
       leftPage,
       rightPage,
       label: rightPage
-        ? `Pages ${index + 1}-${index + 2}`
-        : `Page ${index + 1}`,
+        ? `Paginas ${index + 1}-${index + 2}`
+        : `Pagina ${index + 1}`,
     });
   }
 
@@ -178,17 +178,17 @@ export default function BookPreview() {
         <div className="mx-auto max-w-3xl rounded-[32px] border border-[#d9d1c5] bg-[#faf8f4] p-10 shadow-[0_30px_80px_rgba(15,23,42,0.08)]">
           <div className="flex items-center gap-3 text-slate-800">
             <BookOpen className="h-6 w-6 text-[#ff6b6b]" />
-            <h1 className="text-2xl font-semibold">Book Preview</h1>
+            <h1 className="text-2xl font-semibold">Vista previa del album</h1>
           </div>
           <p className="mt-4 text-sm text-slate-500">
-            There are no pages to preview yet. Add content in the editor first.
+            Aun no hay paginas para previsualizar. Agrega contenido en el editor primero.
           </p>
           <Link
             href="/editor"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-700"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to editor
+            Volver al editor
           </Link>
         </div>
       </div>
@@ -203,7 +203,7 @@ export default function BookPreview() {
         <header className="mb-8 flex items-center justify-between rounded-full border border-[#d9d1c5] bg-[#f8f5f0]/90 px-5 py-3 shadow-[0_10px_30px_rgba(15,23,42,0.06)] backdrop-blur-sm">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
-              Book Preview
+              Vista previa del album
             </p>
             <h1 className="text-lg font-semibold text-slate-800">{book.title}</h1>
           </div>
@@ -212,7 +212,7 @@ export default function BookPreview() {
             className="inline-flex items-center gap-2 rounded-full border border-[#d9d1c5] bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-[#f3efe8]"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to editor
+            Volver al editor
           </Link>
         </header>
 
@@ -244,7 +244,7 @@ export default function BookPreview() {
               className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ChevronLeft className="h-4 w-4" />
-              Previous
+              Anterior
             </button>
             <div className="min-w-[140px] text-center text-sm font-medium text-slate-500">
               {activeSpread.label}
@@ -259,7 +259,7 @@ export default function BookPreview() {
               disabled={activeSpreadIndex === spreads.length - 1}
               className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
             >
-              Next
+              Siguiente
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>

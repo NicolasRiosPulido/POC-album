@@ -17,9 +17,9 @@ import { useEditorStore, selectCanUndo, selectCanRedo } from "@/store/editorStor
 import type { Tool } from "@/types";
 
 const TOOLS: { id: Tool; icon: React.ElementType; label: string; shortcut: string }[] = [
-  { id: "select", icon: MousePointer2, label: "Select", shortcut: "V" },
-  { id: "text", icon: Type, label: "Text", shortcut: "T" },
-  { id: "hand", icon: Hand, label: "Hand", shortcut: "H" },
+  { id: "select", icon: MousePointer2, label: "Seleccionar", shortcut: "V" },
+  { id: "text", icon: Type, label: "Texto", shortcut: "T" },
+  { id: "hand", icon: Hand, label: "Mano", shortcut: "H" },
 ];
 
 export default function Toolbar() {
@@ -81,7 +81,7 @@ export default function Toolbar() {
       <button
         onClick={undo}
         disabled={!canUndo}
-        title="Undo (Ctrl+Z)"
+        title="Deshacer (Ctrl+Z)"
         className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
         <Undo2 className="w-4 h-4" />
@@ -89,7 +89,7 @@ export default function Toolbar() {
       <button
         onClick={redo}
         disabled={!canRedo}
-        title="Redo (Ctrl+Y)"
+        title="Rehacer (Ctrl+Y)"
         className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
         <Redo2 className="w-4 h-4" />
@@ -101,7 +101,7 @@ export default function Toolbar() {
       <div className="flex items-center gap-1">
         <button
           onClick={zoomOut}
-          title="Zoom Out (Ctrl+-)"
+          title="Alejar (Ctrl+-)"
           className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 transition-colors"
         >
           <ZoomOut className="w-4 h-4" />
@@ -114,7 +114,7 @@ export default function Toolbar() {
         </button>
         <button
           onClick={zoomIn}
-          title="Zoom In (Ctrl++)"
+          title="Acercar (Ctrl++)"
           className="p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-white/80 transition-colors"
         >
           <ZoomIn className="w-4 h-4" />
@@ -124,9 +124,9 @@ export default function Toolbar() {
       {/* Save indicator */}
       <div className="ml-2 text-slate-400 text-xs hidden md:block">
         {isSaving ? (
-          <span className="animate-pulse">Saving…</span>
+          <span className="animate-pulse">Guardando…</span>
         ) : lastSaved ? (
-          <span>Saved</span>
+          <span>Guardado</span>
         ) : null}
       </div>
       <Link
@@ -134,7 +134,7 @@ export default function Toolbar() {
         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-[#fffaf5] text-slate-700 text-xs font-medium transition-colors border border-[#ddd5c9]"
       >
         <BookOpen className="w-3.5 h-3.5" />
-        <span className="hidden sm:block">Preview</span>
+        <span className="hidden sm:block">Vista previa</span>
       </Link>
     </header>
   );

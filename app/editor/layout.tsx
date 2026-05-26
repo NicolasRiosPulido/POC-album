@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Editor — Studio Álbum",
-  description: "Design your photo book",
+  description: "Disena tu album de fotos",
 };
 
 export default function EditorLayout({

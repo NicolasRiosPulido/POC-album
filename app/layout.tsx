@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Studio Álbum — Design Photo Books You'll Love",
-  description: "A powerful canvas-based editor to create, design, and export beautiful photo books.",
+  title: "Studio Álbum — Disena albumes de fotos que amaras",
+  description: "Un editor potente basado en lienzo para crear, disenar y exportar albumes de fotos hermosos.",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

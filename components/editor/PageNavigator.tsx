@@ -175,12 +175,12 @@ export default function PageNavigator() {
     <aside className="w-44 bg-[#f6f3ee] border-l border-[#d7d1c7] flex flex-col shrink-0 text-slate-700">
       <div className="flex items-center justify-between px-3 py-2 border-b border-[#ddd5c9]">
         <span className="text-slate-400 text-xs font-medium uppercase tracking-wider">
-          Pages ({book.pages.length})
+          Paginas ({book.pages.length})
         </span>
         <button
           onClick={addPage}
           className="p-1 rounded text-slate-400 hover:text-slate-800 hover:bg-white transition-colors"
-          title="Add page"
+          title="Agregar pagina"
         >
           <Plus className="w-3.5 h-3.5" />
         </button>
@@ -213,7 +213,7 @@ export default function PageNavigator() {
                   duplicatePage(page.id);
                 }}
                 className="p-0.5 rounded bg-white/90 text-slate-500 hover:text-slate-800 border border-[#ddd5c9] transition-colors"
-                title="Duplicate"
+                title="Duplicar"
               >
                 <Copy className="w-2.5 h-2.5" />
               </button>
@@ -224,7 +224,7 @@ export default function PageNavigator() {
                     deletePage(page.id);
                   }}
                   className="p-0.5 rounded bg-white/90 text-red-400/70 hover:text-red-500 border border-[#ddd5c9] transition-colors"
-                  title="Delete"
+                  title="Eliminar"
                 >
                   <Trash2 className="w-2.5 h-2.5" />
                 </button>

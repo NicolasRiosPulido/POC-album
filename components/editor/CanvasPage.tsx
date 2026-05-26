@@ -256,7 +256,7 @@ export default function CanvasPage({ pageId }: CanvasPageProps) {
           rotation: 0,
           zIndex: page.elements.length,
           opacity: 1,
-          content: "Double-click to edit",
+          content: "Doble clic para editar",
           fontSize: 24,
           fontFamily: "Inter, sans-serif",
           fontWeight: "400",

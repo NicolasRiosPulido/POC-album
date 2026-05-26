@@ -14,7 +14,7 @@ export default function ZoomControls() {
       <button
         onClick={zoomOut}
         className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white transition-colors"
-        title="Zoom out"
+        title="Alejar"
       >
         <ZoomOut className="w-4 h-4" />
       </button>
@@ -34,7 +34,7 @@ export default function ZoomControls() {
       <button
         onClick={zoomIn}
         className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white transition-colors"
-        title="Zoom in"
+        title="Acercar"
       >
         <ZoomIn className="w-4 h-4" />
       </button>
@@ -44,7 +44,7 @@ export default function ZoomControls() {
       <button
         onClick={resetZoom}
         className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white transition-colors"
-        title="Fit to screen"
+        title="Ajustar a pantalla"
       >
         <Maximize className="w-4 h-4" />
       </button>

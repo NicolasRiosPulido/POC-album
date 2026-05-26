@@ -129,7 +129,7 @@ export default function Sidebar() {
       rotation: 0,
       zIndex: page.elements.length,
       opacity: 1,
-      content: "Your text here",
+      content: "Tu texto aqui",
       fontSize: 28,
       fontFamily: "Inter, sans-serif",
       fontWeight: "600",
@@ -145,10 +145,10 @@ export default function Sidebar() {
       {/* Tabs */}
       <div className="flex border-b border-[#ddd5c9]">
         <button className="flex-1 py-3 text-xs font-medium text-slate-700 hover:text-slate-900 transition-colors border-b-2 border-[#FF6B6B]">
-          Assets
+          Recursos
         </button>
         <button className="flex-1 py-3 text-xs font-medium text-slate-400 hover:text-slate-700 transition-colors">
-          Layers
+          Capas
         </button>
       </div>
 
@@ -160,14 +160,14 @@ export default function Sidebar() {
             className="flex items-center gap-2 w-full px-3 py-2 rounded-lg bg-[#ebe6dd] hover:bg-white text-slate-700 hover:text-slate-900 text-xs font-medium transition-colors border border-[#ddd5c9]"
           >
             <Type className="w-3.5 h-3.5 text-[#14B8A6]" />
-            Add Text
+            Agregar texto
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
             className="flex items-center gap-2 w-full px-3 py-2 rounded-lg bg-[#ebe6dd] hover:bg-white text-slate-700 hover:text-slate-900 text-xs font-medium transition-colors border border-[#ddd5c9]"
           >
             <Upload className="w-3.5 h-3.5 text-[#FF6B6B]" />
-            Upload Image
+            Subir imagen
           </button>
           <input
             ref={fileInputRef}
@@ -197,7 +197,7 @@ export default function Sidebar() {
                 : "border-[#d7d1c7] bg-[#efebe5] text-slate-500"
             }`}
           >
-            Drag and drop images here
+            Arrastra y suelta imagenes aqui
           </div>
         </div>
 
@@ -205,7 +205,7 @@ export default function Sidebar() {
         {currentPage && (
           <div className="px-3 pb-3">
             <p className="text-slate-400 text-xs mb-2 font-medium uppercase tracking-wider">
-              Background
+              Fondo
             </p>
             <div className="flex items-center gap-2">
               <input
@@ -227,7 +227,7 @@ export default function Sidebar() {
         {assets.length > 0 && (
           <div className="px-3 pb-3">
             <p className="text-slate-400 text-xs mb-2 font-medium uppercase tracking-wider">
-              Images ({assets.length})
+              Imagenes ({assets.length})
             </p>
             <div className="grid grid-cols-2 gap-2">
               {assets.map((asset) => (
@@ -235,7 +235,7 @@ export default function Sidebar() {
                   key={asset.id}
                   onClick={() => handleAddImageToCanvas(asset)}
                   className="relative group aspect-square rounded-lg overflow-hidden border border-[#ddd5c9] hover:border-[#FF6B6B]/60 transition-all bg-white"
-                  title={`Add "${asset.name}" to canvas`}
+                  title={`Agregar "${asset.name}" al lienzo`}
                 >
                   <span className="absolute top-1 left-1 z-10 min-w-[18px] h-[18px] px-1 rounded-full bg-white/90 text-slate-700 text-[10px] font-semibold leading-[18px] text-center border border-[#ddd5c9]">
                     {imageUsageBySrc.get(asset.src) ?? 0}
@@ -261,7 +261,7 @@ export default function Sidebar() {
               <ImageIcon className="w-6 h-6 text-slate-400" />
             </div>
             <p className="text-slate-400 text-xs">
-              Upload images to add them to your book
+              Sube imagenes para agregarlas a tu album
             </p>
           </div>
         )}
@@ -272,13 +272,13 @@ export default function Sidebar() {
         <div className="border-t border-[#ddd5c9] p-3 space-y-3 bg-[#f1ede7]">
           <div className="flex items-center justify-between">
             <p className="text-slate-500 text-xs font-medium uppercase tracking-wider">
-              Properties
+              Propiedades
             </p>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setIsPropertiesCollapsed((prev) => !prev)}
                 className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-white/80 transition-colors"
-                title={isPropertiesCollapsed ? "Show properties" : "Hide properties"}
+                title={isPropertiesCollapsed ? "Mostrar propiedades" : "Ocultar propiedades"}
               >
                 {isPropertiesCollapsed ? (
                   <ChevronDown className="w-3.5 h-3.5" />
@@ -289,7 +289,7 @@ export default function Sidebar() {
               <button
                 onClick={() => deleteElement(currentPageId, selectedElementId)}
                 className="p-1 rounded text-red-400/60 hover:text-red-400 hover:bg-red-400/10 transition-colors"
-                title="Delete element"
+                title="Eliminar elemento"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
@@ -319,7 +319,7 @@ export default function Sidebar() {
 
               {/* Rotation */}
               <div>
-                <label className="text-slate-400 text-xs">Rotation</label>
+                <label className="text-slate-400 text-xs">Rotacion</label>
                 <input
                   type="number"
                   value={Math.round(selectedElement.rotation)}
@@ -335,7 +335,7 @@ export default function Sidebar() {
               {/* Opacity */}
               <div>
                 <label className="text-slate-400 text-xs">
-                  Opacity ({Math.round(selectedElement.opacity * 100)}%)
+                  Opacidad ({Math.round(selectedElement.opacity * 100)}%)
                 </label>
                 <input
                   type="range"
@@ -379,7 +379,7 @@ function TextProperties({
   return (
     <>
       <div>
-        <label className="text-slate-400 text-xs">Content</label>
+        <label className="text-slate-400 text-xs">Contenido</label>
         <textarea
           value={element.content}
           onChange={(e) => onUpdate({ content: e.target.value })}
@@ -389,7 +389,7 @@ function TextProperties({
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <label className="text-slate-400 text-xs">Font Size</label>
+          <label className="text-slate-400 text-xs">Tamano de fuente</label>
           <input
             type="number"
             value={element.fontSize}
@@ -408,7 +408,7 @@ function TextProperties({
         </div>
       </div>
       <div>
-        <label className="text-slate-400 text-xs">Align</label>
+        <label className="text-slate-400 text-xs">Alinear</label>
         <div className="flex gap-1 mt-1">
           {(["left", "center", "right"] as const).map((a) => (
             <button
@@ -420,7 +420,7 @@ function TextProperties({
                   : "bg-[#ebe6dd] text-slate-500 hover:bg-white"
               }`}
             >
-              {a}
+              {a === "left" ? "izquierda" : a === "center" ? "centro" : "derecha"}
             </button>
           ))}
         </div>

@@ -3,7 +3,7 @@ import BookEditor from "@/components/editor/BookEditor";
 
 export const metadata: Metadata = {
   title: "Editor — Studio Álbum",
-  description: "Create and design your photo book",
+  description: "Crea y disena tu album de fotos",
 };
 
 export default function EditorPage() {
