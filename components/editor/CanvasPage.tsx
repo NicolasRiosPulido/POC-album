@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useCallback, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   Stage,
   Layer,
@@ -10,10 +10,7 @@ import {
   Rect,
 } from "react-konva";
 import Konva from "konva";
-import {
-  useEditorStore,
-  selectCurrentPage,
-} from "@/store/editorStore";
+import { useEditorStore } from "@/store/editorStore";
 import type { CanvasElement, ImageElement, TextElement } from "@/types";
 
 interface CanvasPageProps {
@@ -100,13 +97,17 @@ function ImageNode({
 function TextNode({
   element,
   isSelected,
+  isEditing,
   onSelect,
   onUpdate,
+  onStartEdit,
 }: {
   element: TextElement;
   isSelected: boolean;
+  isEditing: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<TextElement>) => void;
+  onStartEdit: (element: TextElement) => void;
 }) {
   const shapeRef = useRef<Konva.Text>(null);
   const trRef = useRef<Konva.Transformer>(null);
@@ -133,15 +134,15 @@ function TextNode({
         align={element.align}
         rotation={element.rotation}
         opacity={element.opacity}
+        visible={!isEditing}
         draggable
         onClick={onSelect}
         onTap={onSelect}
         onDragEnd={(e) => {
           onUpdate({ x: e.target.x(), y: e.target.y() });
         }}
-        onDblClick={() => {
-          // Handled via properties panel for now
-        }}
+        onDblClick={() => onStartEdit(element)}
+        onDblTap={() => onStartEdit(element)}
         onTransformEnd={() => {
           const node = shapeRef.current;
           if (!node) return;
@@ -179,6 +180,7 @@ function TextNode({
 
 export default function CanvasPage({ pageId }: CanvasPageProps) {
   const stageRef = useRef<Konva.Stage>(null);
+  const textEditorRef = useRef<HTMLTextAreaElement>(null);
   const {
     book,
     selectedElementId,
@@ -190,92 +192,186 @@ export default function CanvasPage({ pageId }: CanvasPageProps) {
   } = useEditorStore();
 
   const page = book.pages.find((p) => p.id === pageId);
-  if (!page) return null;
+  const pageElements = page?.elements ?? [];
+  const [editingTextId, setEditingTextId] = useState<string | null>(null);
+  const [editingValue, setEditingValue] = useState("");
 
-  const sortedElements = [...page.elements].sort(
+  const editingElement =
+    page && editingTextId
+      ? (page.elements.find(
+          (el) => el.id === editingTextId && el.type === "text"
+        ) as TextElement | undefined)
+      : undefined;
+
+  const finishTextEdit = (commit: boolean) => {
+    if (!editingTextId) return;
+    if (commit) {
+      updateElement(pageId, editingTextId, { content: editingValue });
+    }
+    setEditingTextId(null);
+    setEditingValue("");
+  };
+
+  const startTextEdit = (element: TextElement) => {
+    selectElement(element.id);
+    setEditingTextId(element.id);
+    setEditingValue(element.content);
+  };
+
+  useEffect(() => {
+    if (!editingTextId || !textEditorRef.current) return;
+    const textarea = textEditorRef.current;
+    textarea.focus();
+    textarea.select();
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.max(textarea.scrollHeight, 24)}px`;
+  }, [editingTextId]);
+
+  useEffect(() => {
+    if (!textEditorRef.current || !editingTextId) return;
+    const textarea = textEditorRef.current;
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.max(textarea.scrollHeight, 24)}px`;
+  }, [editingTextId, editingValue]);
+
+  const sortedElements = [...pageElements].sort(
     (a, b) => a.zIndex - b.zIndex
   );
 
-  const handleStageClick = useCallback(
-    (e: Konva.KonvaEventObject<MouseEvent>) => {
-      if (e.target === e.target.getStage() || e.target instanceof Konva.Rect) {
-        selectElement(null);
+  const handleStageClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    if (!page) return;
+    if (e.target === e.target.getStage() || e.target instanceof Konva.Rect) {
+      selectElement(null);
 
-        if (tool === "text") {
-          const pos = e.target.getStage()?.getRelativePointerPosition();
-          if (!pos) return;
-          const newText: TextElement = {
-            id: crypto.randomUUID(),
-            type: "text",
-            x: pos.x,
-            y: pos.y,
-            width: 200,
-            height: 50,
-            rotation: 0,
-            zIndex: page.elements.length,
-            opacity: 1,
-            content: "Double-click to edit",
-            fontSize: 24,
-            fontFamily: "Inter, sans-serif",
-            fontWeight: "400",
-            fontStyle: "normal",
-            color: "#0F172A",
-            align: "left",
-          };
-          addElement(pageId, newText);
-        }
+      if (tool === "text") {
+        const pos = e.target.getStage()?.getRelativePointerPosition();
+        if (!pos) return;
+        const newText: TextElement = {
+          id: crypto.randomUUID(),
+          type: "text",
+          x: pos.x,
+          y: pos.y,
+          width: 200,
+          height: 50,
+          rotation: 0,
+          zIndex: page.elements.length,
+          opacity: 1,
+          content: "Double-click to edit",
+          fontSize: 24,
+          fontFamily: "Inter, sans-serif",
+          fontWeight: "400",
+          fontStyle: "normal",
+          color: "#0F172A",
+          align: "left",
+        };
+        addElement(pageId, newText);
       }
-    },
-    [tool, pageId, page.elements.length, addElement, selectElement]
-  );
+    }
+  };
+
+  if (!page) return null;
 
   return (
-    <Stage
-      ref={stageRef}
-      width={page.width * zoom}
-      height={page.height * zoom}
-      scaleX={zoom}
-      scaleY={zoom}
-      onClick={handleStageClick}
+    <div
       style={{
-        boxShadow: "0 4px 40px rgba(0,0,0,0.18)",
-        borderRadius: 4,
-        background: page.background,
-        cursor: tool === "text" ? "text" : tool === "hand" ? "grab" : "default",
+        position: "relative",
+        width: page.width * zoom,
+        height: page.height * zoom,
       }}
     >
-      <Layer>
-        <Rect
-          x={0}
-          y={0}
-          width={page.width}
-          height={page.height}
-          fill={page.background}
+      <Stage
+        ref={stageRef}
+        width={page.width * zoom}
+        height={page.height * zoom}
+        scaleX={zoom}
+        scaleY={zoom}
+        onClick={handleStageClick}
+        style={{
+          boxShadow: "0 4px 40px rgba(0,0,0,0.18)",
+          borderRadius: 4,
+          background: page.background,
+          cursor: tool === "text" ? "text" : tool === "hand" ? "grab" : "default",
+        }}
+      >
+        <Layer>
+          <Rect
+            x={0}
+            y={0}
+            width={page.width}
+            height={page.height}
+            fill={page.background}
+          />
+          {sortedElements.map((element: CanvasElement) =>
+            element.type === "image" ? (
+              <ImageNode
+                key={element.id}
+                element={element as ImageElement}
+                isSelected={selectedElementId === element.id}
+                onSelect={() => selectElement(element.id)}
+                onUpdate={(updates) =>
+                  updateElement(pageId, element.id, updates)
+                }
+              />
+            ) : (
+              <TextNode
+                key={element.id}
+                element={element as TextElement}
+                isSelected={selectedElementId === element.id}
+                isEditing={editingTextId === element.id}
+                onSelect={() => selectElement(element.id)}
+                onUpdate={(updates) =>
+                  updateElement(pageId, element.id, updates)
+                }
+                onStartEdit={startTextEdit}
+              />
+            )
+          )}
+        </Layer>
+      </Stage>
+      {editingElement && (
+        <textarea
+          ref={textEditorRef}
+          value={editingValue}
+          onChange={(e) => setEditingValue(e.target.value)}
+          onBlur={() => finishTextEdit(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              e.preventDefault();
+              finishTextEdit(false);
+              return;
+            }
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              finishTextEdit(true);
+            }
+          }}
+          style={{
+            position: "absolute",
+            left: editingElement.x * zoom,
+            top: editingElement.y * zoom,
+            width: Math.max(24, editingElement.width * zoom),
+            minHeight: Math.max(24, editingElement.height * zoom),
+            fontSize: editingElement.fontSize * zoom,
+            fontFamily: editingElement.fontFamily,
+            fontWeight: editingElement.fontWeight,
+            fontStyle: editingElement.fontStyle,
+            color: editingElement.color,
+            textAlign: editingElement.align,
+            lineHeight: "1.2",
+            background: "transparent",
+            border: "1px solid #FF6B6B",
+            borderRadius: 4,
+            margin: 0,
+            padding: 0,
+            outline: "none",
+            resize: "none",
+            overflow: "hidden",
+            transform: `rotate(${editingElement.rotation}deg)`,
+            transformOrigin: "top left",
+            zIndex: 10,
+          }}
         />
-        {sortedElements.map((element: CanvasElement) =>
-          element.type === "image" ? (
-            <ImageNode
-              key={element.id}
-              element={element as ImageElement}
-              isSelected={selectedElementId === element.id}
-              onSelect={() => selectElement(element.id)}
-              onUpdate={(updates) =>
-                updateElement(pageId, element.id, updates)
-              }
-            />
-          ) : (
-            <TextNode
-              key={element.id}
-              element={element as TextElement}
-              isSelected={selectedElementId === element.id}
-              onSelect={() => selectElement(element.id)}
-              onUpdate={(updates) =>
-                updateElement(pageId, element.id, updates)
-              }
-            />
-          )
-        )}
-      </Layer>
-    </Stage>
+      )}
+    </div>
   );
 }

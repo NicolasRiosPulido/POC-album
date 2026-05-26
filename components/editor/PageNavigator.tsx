@@ -3,6 +3,163 @@
 import React from "react";
 import { Plus, Trash2, Copy } from "lucide-react";
 import { useEditorStore } from "@/store/editorStore";
+import type { CanvasElement, Page } from "@/types";
+
+function elementRotationTransform(element: CanvasElement): string | undefined {
+  if (!element.rotation) return undefined;
+  const cx = element.x + element.width / 2;
+  const cy = element.y + element.height / 2;
+  return `rotate(${element.rotation} ${cx} ${cy})`;
+}
+
+function PageThumbnail({ page, index }: { page: Page; index: number }) {
+  const sortedElements = [...page.elements].sort((a, b) => a.zIndex - b.zIndex);
+  const [thumbnailOpacity, setThumbnailOpacity] = React.useState(1);
+  const isFirstRenderRef = React.useRef(true);
+
+  const thumbnailSignature = React.useMemo(
+    () =>
+      JSON.stringify({
+        background: page.background,
+        elements: sortedElements.map((element) => {
+          if (element.type === "image") {
+            return {
+              id: element.id,
+              type: element.type,
+              x: element.x,
+              y: element.y,
+              width: element.width,
+              height: element.height,
+              rotation: element.rotation,
+              opacity: element.opacity,
+              zIndex: element.zIndex,
+              src: element.src,
+            };
+          }
+
+          return {
+            id: element.id,
+            type: element.type,
+            x: element.x,
+            y: element.y,
+            width: element.width,
+            height: element.height,
+            rotation: element.rotation,
+            opacity: element.opacity,
+            zIndex: element.zIndex,
+            content: element.content,
+            fontSize: element.fontSize,
+            fontFamily: element.fontFamily,
+            fontWeight: element.fontWeight,
+            fontStyle: element.fontStyle,
+            color: element.color,
+            align: element.align,
+          };
+        }),
+      }),
+    [page.background, sortedElements]
+  );
+
+  React.useEffect(() => {
+    if (isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
+      return;
+    }
+
+    setThumbnailOpacity(0.75);
+    const timeoutId = window.setTimeout(() => {
+      setThumbnailOpacity(1);
+    }, 180);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [thumbnailSignature]);
+
+  return (
+    <div
+      className="aspect-[0.707] w-full overflow-hidden"
+      style={{ background: page.background ?? "#ffffff" }}
+    >
+      <svg
+        viewBox={`0 0 ${page.width} ${page.height}`}
+        className="h-full w-full"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ opacity: thumbnailOpacity, transition: "opacity 180ms ease-out" }}
+      >
+        <rect
+          x={0}
+          y={0}
+          width={page.width}
+          height={page.height}
+          fill={page.background ?? "#ffffff"}
+        />
+
+        {sortedElements.map((element) => {
+          if (element.type === "image") {
+            return (
+              <image
+                key={element.id}
+                href={element.src}
+                x={element.x}
+                y={element.y}
+                width={element.width}
+                height={element.height}
+                opacity={element.opacity}
+                preserveAspectRatio="none"
+                transform={elementRotationTransform(element)}
+              />
+            );
+          }
+
+          return (
+            <foreignObject
+              key={element.id}
+              x={element.x}
+              y={element.y}
+              width={element.width}
+              height={element.height}
+              opacity={element.opacity}
+              transform={elementRotationTransform(element)}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  color: element.color,
+                  fontSize: `${element.fontSize}px`,
+                  fontFamily: element.fontFamily,
+                  fontWeight: element.fontWeight,
+                  fontStyle: element.fontStyle,
+                  textAlign: element.align,
+                  overflow: "hidden",
+                  lineHeight: 1.2,
+                  wordBreak: "break-word",
+                }}
+              >
+                {element.content}
+              </div>
+            </foreignObject>
+          );
+        })}
+      </svg>
+
+      {page.elements.length === 0 && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <span
+            className="text-xs font-medium"
+            style={{
+              color:
+                page.background === "#ffffff" || !page.background
+                  ? "#ccc"
+                  : "rgba(255,255,255,0.3)",
+            }}
+          >
+            {index + 1}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function PageNavigator() {
   const {
@@ -41,24 +198,7 @@ export default function PageNavigator() {
             onClick={() => setCurrentPage(page.id)}
           >
             {/* Page thumbnail */}
-            <div
-              className="aspect-[0.707] w-full flex items-center justify-center text-2xl font-light"
-              style={{ background: page.background ?? "#ffffff" }}
-            >
-              {page.elements.length === 0 && (
-                <span
-                  className="text-xs font-medium"
-                  style={{
-                    color:
-                      page.background === "#ffffff" || !page.background
-                        ? "#ccc"
-                        : "rgba(255,255,255,0.3)",
-                  }}
-                >
-                  {index + 1}
-                </span>
-              )}
-            </div>
+            <PageThumbnail page={page} index={index} />
 
             {/* Page number badge */}
             <div className="absolute bottom-0 left-0 right-0 py-1 px-1.5 bg-black/40 backdrop-blur-sm">
