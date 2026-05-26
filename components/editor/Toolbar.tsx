@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useRef } from "react";
 import {
   MousePointer2,
@@ -8,6 +9,7 @@ import {
   Hand,
   Undo2,
   Redo2,
+  BookOpen,
   ZoomIn,
   ZoomOut,
   Layers,
@@ -198,6 +200,13 @@ export default function Toolbar() {
           <span>Saved</span>
         ) : null}
       </div>
+      <Link
+        href="/preview"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-[#fffaf5] text-slate-700 text-xs font-medium transition-colors border border-[#ddd5c9]"
+      >
+        <BookOpen className="w-3.5 h-3.5" />
+        <span className="hidden sm:block">Preview</span>
+      </Link>
     </header>
   );
 }
